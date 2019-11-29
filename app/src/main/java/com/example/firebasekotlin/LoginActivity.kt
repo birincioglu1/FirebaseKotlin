@@ -18,11 +18,16 @@ class LoginActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
+        initMyAuthListenir()  //İnterface atamalari
 
         tvKayitOl.setOnClickListener {
             val intent= Intent(this,RegisterActivity::class.java)
             startActivity(intent)
         }
+            tvonayMailiTekrarGonder.setOnClickListener {  //Dialog oluşturma
+                var dialogGoster=OnayMailTekrarFragment()
+                dialogGoster.show(supportFragmentManager,"gosterdialog")
+            }
         btnGirisYap.setOnClickListener {
 
             if(etMail.text.isNotEmpty()&&etSifre.text.isNotEmpty())
@@ -33,9 +38,14 @@ class LoginActivity : AppCompatActivity() {
                         override fun onComplete(p0: Task<AuthResult>) {
                             if(p0.isSuccessful)
                             {progressBarGizle()
-                                Toast.makeText(this@LoginActivity,"Başarili Giris:"+FirebaseAuth.getInstance().currentUser?.email,Toast.LENGTH_SHORT).show()
-                                onayMailiGonder()
-                                FirebaseAuth.getInstance().signOut()
+                                if (!p0.result!!.user.isEmailVerified)
+                                {
+                                    FirebaseAuth.getInstance().signOut()
+                                }
+
+                                 // Toast.makeText(this@LoginActivity,"Başarili Giris:"+FirebaseAuth.getInstance().currentUser?.email,Toast.LENGTH_SHORT).show()
+
+
                             }else{
                                 progressBarGizle()
                                 Toast.makeText(this@LoginActivity,"Hatali giriş"+p0.exception,Toast.LENGTH_SHORT).show()
@@ -50,25 +60,6 @@ class LoginActivity : AppCompatActivity() {
 
 
         }
-    }
-    private fun onayMailiGonder(){
-        var kullanici=FirebaseAuth.getInstance().currentUser
-        if(kullanici!=null)
-        {
-            kullanici.sendEmailVerification()
-                .addOnCompleteListener(object :OnCompleteListener<Void>{
-                    override fun onComplete(p0: Task<Void>) {
-                        if(p0.isSuccessful)
-                        {
-                            Toast.makeText(this@LoginActivity,"Mail Kutunuzu Kontrol Ediniz",Toast.LENGTH_SHORT).show()
-
-                        }else{
-                            Toast.makeText(this@LoginActivity,"Mail Gönderilirken Sorun Oluştu"+p0.exception,Toast.LENGTH_SHORT).show()
-                        }
-                    }
-
-                })
-        }
 
     }
     private fun progressBarGoster()
@@ -78,6 +69,28 @@ class LoginActivity : AppCompatActivity() {
     private fun progressBarGizle()
     {
         progressBarLogin.visibility= View.INVISIBLE
+    }
+    private fun initMyAuthListenir()
+    {
+        myAuthStateListenir=object :FirebaseAuth.AuthStateListener{
+            override fun onAuthStateChanged(p0: FirebaseAuth) {
+                var kullanici=p0.currentUser
+                if (kullanici!=null)
+                {
+                    if (kullanici.isEmailVerified)
+                    {
+                        Toast.makeText(this@LoginActivity,"Mail onaylanmış giriş yapılabilir",Toast.LENGTH_SHORT).show()
+                        var intent=Intent(this@LoginActivity,MainActivity::class.java)
+                        startActivity(intent)
+                        finish()
+                    }else{
+                        Toast.makeText(this@LoginActivity,"Mail Adresinizi onaylayin",Toast.LENGTH_SHORT).show()
+
+                    }
+                }
+            }
+
+        }
     }
 
     override fun onStart() { //Aktivite Açılmadan önce çalışır
