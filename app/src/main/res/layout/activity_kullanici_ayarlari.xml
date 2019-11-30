@@ -22,7 +22,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
-        android:text="Şuanki Mail"
+        android:text="Şuanki Parola"
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="@+id/textView2"
         app:layout_constraintTop_toBottomOf="@+id/textView2" />
@@ -40,12 +40,12 @@
         app:layout_constraintTop_toTopOf="@+id/textView2" />
 
     <EditText
-        android:id="@+id/etDetayMail"
+        android:id="@+id/etDetaySifre"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:hint="Şuanki Mail"
-        android:inputType="textEmailAddress"
+        android:hint="Şuanki Parola"
+        android:inputType="textPassword"
         app:layout_constraintBottom_toBottomOf="@+id/textView3"
         app:layout_constraintStart_toStartOf="@+id/etDetayName"
         app:layout_constraintTop_toTopOf="@+id/textView3" />
@@ -54,18 +54,98 @@
         android:id="@+id/btnSifreGonder"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="56dp"
+        android:layout_marginTop="44dp"
         android:text="ŞİFRE SIFIRLA"
-        app:layout_constraintStart_toStartOf="@+id/textView3"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView3" />
 
     <Button
         android:id="@+id/btnDegisikleriKaydet"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="100dp"
+        android:layout_marginStart="8dp"
         android:text="KAYDET"
+        app:layout_constraintStart_toEndOf="@+id/btnSifreveyaMailGuncelle"
+        app:layout_constraintTop_toTopOf="@+id/btnSifreveyaMailGuncelle" />
+
+    <Button
+        android:id="@+id/btnSifreveyaMailGuncelle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="Mail ve Şifre Güncelle"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/btnSifreGonder"
         app:layout_constraintTop_toTopOf="@+id/btnSifreGonder" />
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/guncelleLayout"
+        android:layout_width="409dp"
+        android:layout_height="397dp"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnSifreveyaMailGuncelle">
+
+        <TextView
+            android:id="@+id/textView4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="28dp"
+            android:layout_marginTop="52dp"
+            android:text="Yeni Email"
+            android:textSize="18sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/textView5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="28dp"
+            android:text="Yeni Şifre"
+            android:textSize="18sp"
+            app:layout_constraintStart_toStartOf="@+id/textView4"
+            app:layout_constraintTop_toBottomOf="@+id/textView4" />
+
+        <EditText
+            android:id="@+id/etYeniMail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="textEmailAddress"
+            app:layout_constraintBottom_toBottomOf="@+id/textView4"
+            app:layout_constraintTop_toTopOf="@+id/textView4"
+            tools:layout_editor_absoluteX="147dp" />
+
+        <EditText
+            android:id="@+id/etYeniSifreGuncelle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="textPersonName"
+            app:layout_constraintBottom_toBottomOf="@+id/textView5"
+            app:layout_constraintStart_toStartOf="@+id/etYeniMail"
+            app:layout_constraintTop_toTopOf="@+id/textView5" />
+
+        <Button
+            android:id="@+id/btnSifreGuncelle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="56dp"
+            android:layout_marginTop="76dp"
+            android:text="Şifre Güncelle"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView5" />
+
+        <Button
+            android:id="@+id/btnMailGuncelle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="56dp"
+            android:text="Mail Güncelle"
+            app:layout_constraintStart_toEndOf="@+id/btnSifreGuncelle"
+            app:layout_constraintTop_toTopOf="@+id/btnSifreGuncelle" />
+    </android.support.constraint.ConstraintLayout>
 </android.support.constraint.ConstraintLayout>
