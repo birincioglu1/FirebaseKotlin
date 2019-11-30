@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".SifremiunuttumDialogFragment">
+
+
+    <Button
+        android:id="@+id/btnSifreyiUnuttumIptal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text="İPTAL"
+        app:layout_constraintStart_toStartOf="@+id/etSfireyiTekraGonder"
+        app:layout_constraintTop_toBottomOf="@+id/etSfireyiTekraGonder" />
+
+    <TextView
+        android:id="@+id/tvBaslik"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Şifreyi Tekrar Gönder"
+        android:textAlignment="center"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/etSfireyiTekraGonder"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="28dp"
+        android:ems="10"
+        android:hint="E-mail"
+        android:inputType="textEmailAddress"
+        app:layout_constraintEnd_toEndOf="@+id/tvBaslik"
+        app:layout_constraintHorizontal_bias="0.513"
+        app:layout_constraintStart_toStartOf="@+id/tvBaslik"
+        app:layout_constraintTop_toBottomOf="@+id/tvBaslik" />
+
+    <Button
+        android:id="@+id/btnSifreyiUnuttumGonder"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="GÖNDER"
+        app:layout_constraintEnd_toEndOf="@+id/etSfireyiTekraGonder"
+        app:layout_constraintTop_toTopOf="@+id/btnSifreyiUnuttumIptal" />
+</android.support.constraint.ConstraintLayout>
