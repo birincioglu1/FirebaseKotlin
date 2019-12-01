@@ -26,7 +26,7 @@ class LoginActivity : AppCompatActivity() {
         }
             tvonayMailiTekrarGonder.setOnClickListener {  //Dialog oluşturma
                 var dialogGoster=OnayMailTekrarFragment()
-                dialogGoster.show(supportFragmentManager,"gosterdialog")
+                dialogGoster.show(supportFragmentManager,"gosterdialogSifre")
             }
         tvSifreTekrarYolla.setOnClickListener {
             var dialogSifreyiTekrarGonder=SifremiunuttumDialogFragment()
@@ -42,7 +42,7 @@ class LoginActivity : AppCompatActivity() {
                         override fun onComplete(p0: Task<AuthResult>) {
                             if(p0.isSuccessful)
                             {progressBarGizle()
-                                if (!p0.result!!.user.isEmailVerified)
+                                if (!p0.result!!.user!!.isEmailVerified)
                                 {
                                     FirebaseAuth.getInstance().signOut()
                                 }

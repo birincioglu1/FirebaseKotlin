@@ -1,5 +1,6 @@
 package com.example.firebasekotlin
 
+import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -8,6 +9,7 @@ import com.google.firebase.auth.EmailAuthProvider
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.UserProfileChangeRequest
 import kotlinx.android.synthetic.main.activity_kullanici_ayarlari.*
+import kotlin.math.sign
 
 class KullaniciAyarlariActivity : AppCompatActivity() {
 
@@ -17,7 +19,7 @@ class KullaniciAyarlariActivity : AppCompatActivity() {
         var kullanici=FirebaseAuth.getInstance().currentUser!!
 
         etDetayName.setText(kullanici.displayName.toString())
-        etDetaySifre.setText(kullanici.email.toString())
+
 
         btnSifreGonder.setOnClickListener {
             FirebaseAuth.getInstance().sendPasswordResetEmail(kullanici.email.toString())
@@ -33,7 +35,7 @@ class KullaniciAyarlariActivity : AppCompatActivity() {
                 }
         }
         btnDegisikleriKaydet.setOnClickListener {
-            if(etDetayName.text.toString().isNotEmpty()&&etDetaySifre.text.toString().isNotEmpty()){
+            if(etDetayName.text.toString().isNotEmpty()){
                 if(!etDetayName.text.toString().equals(kullanici.email.toString()))
                 {
                       var bilgilerGuncelle= UserProfileChangeRequest.Builder()
@@ -67,15 +69,64 @@ class KullaniciAyarlariActivity : AppCompatActivity() {
                         if(task.isSuccessful)
                         {
                             guncelleLayout.visibility=View.VISIBLE
-
+                            btnMailGuncelle.setOnClickListener {
+                                mailAdresininGuncelle()
+                            }
+                                btnSifreGuncelle.setOnClickListener {
+                                    sifrebilgisiniGuncelle()
+                                }
                         }else
                         {
                             Toast.makeText(this@KullaniciAyarlariActivity,"Şuanki şifreniz yanlış girdiniz",Toast.LENGTH_SHORT).show()
+                            guncelleLayout.visibility=View.INVISIBLE
                         }
                     }
             }else{
                 Toast.makeText(this@KullaniciAyarlariActivity,"Güncellemeler için geçerli şifrenizi yazmalısınız",Toast.LENGTH_SHORT).show()
             }
         }
+    }
+
+    private fun sifrebilgisiniGuncelle() {
+        var kullanici=FirebaseAuth.getInstance().currentUser!!
+
+
+        if (kullanici!=null)
+        {
+            kullanici.updatePassword(etYeniSifreGuncelle.text.toString())
+                .addOnCompleteListener { task ->
+                    Toast.makeText(this@KullaniciAyarlariActivity,"Şifreniz değiştirildi tekrar giriş yapın",Toast.LENGTH_SHORT).show()
+                    FirebaseAuth.getInstance().signOut()
+                    loginSayfasinaYonlendir()
+
+                }
+        }
+    }
+
+    private fun mailAdresininGuncelle()
+    {
+        var kullanici=FirebaseAuth.getInstance().currentUser!!
+        if (kullanici!=null)
+        {
+            FirebaseAuth.getInstance().fetchSignInMethodsForEmail(etYeniMail.text.toString())
+                .addOnCompleteListener { task ->
+                    Toast.makeText(this@KullaniciAyarlariActivity,"Güncellendi"+task.exception,Toast.LENGTH_SHORT).show()
+                }
+            kullanici.updateEmail(etYeniMail.text.toString())
+                .addOnCompleteListener { task ->
+                    Toast.makeText(this@KullaniciAyarlariActivity,"Mail değiştirildi tekrar giriş yapın",Toast.LENGTH_SHORT).show()
+                    FirebaseAuth.getInstance().signOut()
+                    loginSayfasinaYonlendir()
+                }
+        }else{
+            Toast.makeText(this@KullaniciAyarlariActivity,"Mail güncellenemedi",Toast.LENGTH_SHORT).show()
+        }
+
+    }
+    fun loginSayfasinaYonlendir()
+    {
+        var intent=Intent(this@KullaniciAyarlariActivity,LoginActivity::class.java)
+        startActivity(intent)
+        finish()
     }
 }

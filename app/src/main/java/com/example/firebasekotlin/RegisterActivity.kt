@@ -1,5 +1,5 @@
 package com.example.firebasekotlin
-
+import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -44,9 +44,31 @@ class RegisterActivity : AppCompatActivity() {
                     if(p0.isSuccessful)
                     {
 
-                        Toast.makeText(this@RegisterActivity,"Üye kayit edildi!"+FirebaseAuth.getInstance().currentUser?.email,Toast.LENGTH_SHORT).show()
+
                         onayMailiGonder()
-                        FirebaseAuth.getInstance().signOut()
+                        var veriTabaninaEklenecekKullanici=Kullanici()
+                        veriTabaninaEklenecekKullanici.isim=etMail.text.toString().substring(0,etMail.text.toString().indexOf("@"))
+                        //@işaretine kadarki kısmı al isim gibi yap
+                        veriTabaninaEklenecekKullanici.user_id=FirebaseAuth.getInstance().currentUser?.uid
+                        veriTabaninaEklenecekKullanici.profil_resmi=""
+                        veriTabaninaEklenecekKullanici.telefon="123"
+                        veriTabaninaEklenecekKullanici.seviye="1"
+
+                        FirebaseDatabase.getInstance().reference
+                            .child("kullanici")
+                            .child(FirebaseAuth.getInstance().currentUser!!.uid)
+                            .setValue(veriTabaninaEklenecekKullanici)
+                            .addOnCompleteListener { task ->
+                                if (task.isSuccessful)
+                                {
+                                    Toast.makeText(this@RegisterActivity,"Üye kayit edildi!"+FirebaseAuth.getInstance().currentUser?.email,Toast.LENGTH_SHORT).show()
+                                    FirebaseAuth.getInstance().signOut()
+                                    loginSayfasinaYonlendir()
+
+                                }
+                            }
+
+
                     }
                     else{
 
@@ -81,11 +103,18 @@ class RegisterActivity : AppCompatActivity() {
                         }else{
                             Toast.makeText(this@RegisterActivity,"Mail Gönderilirken Sorun Oluştu"+p0.exception,Toast.LENGTH_SHORT).show()
                             FirebaseAuth.getInstance().signOut()
+
                         }
                     }
 
                 })
         }
 
+    }
+    fun loginSayfasinaYonlendir()
+    {
+        var intent= Intent(this@RegisterActivity,LoginActivity::class.java)
+        startActivity(intent)
+        finish()
     }
 }
