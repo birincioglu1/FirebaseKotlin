@@ -3,15 +3,16 @@ package com.example.firebasekotlin
 
 import android.os.Bundle
 import android.provider.ContactsContract
-import android.support.v4.app.DialogFragment
-import android.support.v4.app.FragmentActivity
+
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
-import com.firebase.ui.auth.ui.email.EmailActivity
+import androidx.fragment.app.DialogFragment
+import androidx.fragment.app.FragmentActivity
+
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.EmailAuthCredential
@@ -27,7 +28,7 @@ class OnayMailTekrarFragment : DialogFragment() {
 
     lateinit var emailEditText: EditText
     lateinit var sifreEditText: EditText
-    lateinit var mContext:FragmentActivity
+    lateinit var mContext: FragmentActivity
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -41,14 +42,14 @@ class OnayMailTekrarFragment : DialogFragment() {
         mContext=activity!!
         var btnIptal=view.findViewById<Button>(R.id.btnDialogIptal)
         btnIptal.setOnClickListener {
-            dialog.dismiss()
+            dialog?.dismiss()
         }
         var btnGonder=view.findViewById<Button>(R.id.btnDialogGonder)
         btnGonder.setOnClickListener{
             if(emailEditText.text.toString().isNotEmpty()&&sifreEditText.text.toString().isNotEmpty())
             {
                 girisYapveOnayMailiTekrarGonder(emailEditText.text.toString(),sifreEditText.text.toString())
-                dialog.dismiss()
+                dialog?.dismiss()
 
             }else
             {

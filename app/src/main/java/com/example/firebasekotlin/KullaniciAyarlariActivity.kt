@@ -1,15 +1,15 @@
 package com.example.firebasekotlin
 
 import android.content.Intent
-import android.support.v7.app.AppCompatActivity
+
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.EmailAuthProvider
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.UserProfileChangeRequest
 import kotlinx.android.synthetic.main.activity_kullanici_ayarlari.*
-import kotlin.math.sign
 
 class KullaniciAyarlariActivity : AppCompatActivity() {
 

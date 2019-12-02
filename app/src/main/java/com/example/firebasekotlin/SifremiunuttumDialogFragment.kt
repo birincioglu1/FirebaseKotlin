@@ -2,8 +2,6 @@ package com.example.firebasekotlin
 
 
 import android.os.Bundle
-import android.support.v4.app.DialogFragment
-import android.support.v4.app.FragmentActivity
 
 import android.view.LayoutInflater
 import android.view.View
@@ -11,6 +9,8 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
+import androidx.fragment.app.DialogFragment
+import androidx.fragment.app.FragmentActivity
 import com.google.firebase.auth.FirebaseAuth
 
 
@@ -29,7 +29,7 @@ class SifremiunuttumDialogFragment : DialogFragment() {
         emailEditText=view.findViewById(R.id.etSfireyiTekraGonder)
         var btnIptal=view.findViewById<Button>(R.id.btnSifreyiUnuttumIptal)
         btnIptal.setOnClickListener {
-            dialog.dismiss()
+            dialog?.dismiss()
         }
         var btnGonder=view.findViewById<Button>(R.id.btnSifreyiUnuttumGonder)
         btnGonder.setOnClickListener {
@@ -38,11 +38,11 @@ class SifremiunuttumDialogFragment : DialogFragment() {
                     if (task.isSuccessful)
                     {
                         Toast.makeText(mContext,"Şifre sıfırlama gonderildi",Toast.LENGTH_SHORT).show()
-                        dialog.dismiss()
+                        dialog?.dismiss()
                     }else
                     {
                         Toast.makeText(mContext,"Hata Oluştu"+task.exception,Toast.LENGTH_SHORT).show()
-                        dialog.dismiss()
+                        dialog?.dismiss()
                     }
                 }
 
